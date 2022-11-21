@@ -1,6 +1,8 @@
 package classes
 
 class Region (val name:String) 
-extends Area 
+extends Area:
+    override def toString="Region:" + name 
+
 
 
