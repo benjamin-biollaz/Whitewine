@@ -3,6 +3,10 @@ package dal
 import classes.*
 import java.nio.charset.UnmappableCharacterException;
 
+import java.nio.charset.CodingErrorAction
+import scala.io.Codec
+
+
 class WineDB {
 
   //columns number in csv
@@ -15,23 +19,21 @@ class WineDB {
   val PRICE = 6;
   val YEAR = 7;
 
+  //change the default behavior to replace the letter in case of encoding exception
+  implicit val codec: Codec = Codec("UTF-8")
+  codec.onMalformedInput(CodingErrorAction.REPLACE)
+  codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
 
   val getAvgRatingCountry = (country: String) => println("salut")
   val getWineByYear = (year: Int) => println("salut")
   val getTotalPriceWineryWines = (winery: String) => println("salut")
 
-
   val getWineByName = (wineName: String) => {
     val src = io.Source.fromFile("11-WhiteWine.csv")
     val iter = src.getLines().map(_.split(","))
-    val wineIt = iter.filter(_(0).equals(wineName))
-    var foundWine:Array[String] = null;
-    try {
-        foundWine = wineIt.next()
-    } catch {
-      case e:UnmappableCharacterException => println("Cannot find a wine with the given name.");
-    }
-    if (foundWine != null) 
+    val wineIt = iter.filter(_(NAME).equals(wineName))
+    val foundWine = wineIt.next()
+    if (wineIt.next() != null) 
           new Wine(foundWine(NAME), foundWine(YEAR).toInt, foundWine(PRICE).toDouble, 
           new Country(foundWine(COUNTRY)), new Region(foundWine(REGION)), new Winery(foundWine(WINERY)),
           new Rating(foundWine(RATING).toDouble, foundWine(NB_RATINGS).toInt));
@@ -39,8 +41,12 @@ class WineDB {
         null
   }
 
-
-  val getNbWineByRegion = (wine: String) => println("salut")
+  val getNbWineByRegion = (region: String) => {
+    val src = io.Source.fromFile("11-WhiteWine.csv")
+    val iter = src.getLines().map(_.split(","))
+    val wineIt = iter.filter(_(REGION).equals(region))
+    wineIt.length
+  }
 
 
   val readCSV = () => {
