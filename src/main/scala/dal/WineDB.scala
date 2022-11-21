@@ -9,7 +9,8 @@ import scala.io.Codec
 
 class WineDB {
 
-  //columns number in csv
+  //CSV file constant
+  val FILE_PATH = "11-WhiteWine.csv"
   val NAME = 0;
   val COUNTRY = 1;
   val REGION = 2;
@@ -24,16 +25,28 @@ class WineDB {
   codec.onMalformedInput(CodingErrorAction.REPLACE)
   codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
 
-  val getAvgRatingCountry = (country: String) => println("salut")
+  val getAvgRatingCountry = (country: String) => {
+    val iter = getCSVIterator(FILE_PATH);
+    val filteredIt = iter.filter(_(COUNTRY).equals(country));
+    val iter2 = getCSVIterator(FILE_PATH);
+    val filteredIt2 = iter2.filter(_(COUNTRY).equals(country))
+    filteredIt.foldLeft(0.0)(_ + _(RATING).toDouble) / filteredIt2.length 
+  }
+
   val getWineByYear = (year: Int) => println("salut")
-  val getTotalPriceWineryWines = (winery: String) => println("salut")
+ 
+ 
+  val getTotalPriceWineryWines = (winery: String) => {
+    val iter = getCSVIterator(FILE_PATH);
+    val filteredIt = iter.filter(_(WINERY).equals(winery))
+    filteredIt.foldLeft(0.0)(_ + _(PRICE).toDouble)
+  }
 
   val getWineByName = (wineName: String) => {
-    val src = io.Source.fromFile("11-WhiteWine.csv")
-    val iter = src.getLines().map(_.split(","))
-    val wineIt = iter.filter(_(NAME).equals(wineName))
-    val foundWine = wineIt.next()
-    if (wineIt.next() != null) 
+    val iter = getCSVIterator(FILE_PATH);
+    val filteredIt = iter.filter(_(NAME).equals(wineName))
+    val foundWine = filteredIt.next()
+    if (foundWine != null) 
           new Wine(foundWine(NAME), foundWine(YEAR).toInt, foundWine(PRICE).toDouble, 
           new Country(foundWine(COUNTRY)), new Region(foundWine(REGION)), new Winery(foundWine(WINERY)),
           new Rating(foundWine(RATING).toDouble, foundWine(NB_RATINGS).toInt));
@@ -42,12 +55,15 @@ class WineDB {
   }
 
   val getNbWineByRegion = (region: String) => {
-    val src = io.Source.fromFile("11-WhiteWine.csv")
-    val iter = src.getLines().map(_.split(","))
-    val wineIt = iter.filter(_(REGION).equals(region))
-    wineIt.length
+    val iter = getCSVIterator(FILE_PATH);
+    val filteredIt = iter.filter(_(REGION).equals(region))
+    filteredIt.size
   }
 
+  val getCSVIterator = (fileName: String) => {
+    val src = io.Source.fromFile(fileName)
+    src.getLines().map(_.split(","))
+  }
 
   val readCSV = () => {
     val bufferedSource = io.Source.fromFile("11-WhiteWine.csv")
