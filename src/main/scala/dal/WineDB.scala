@@ -27,36 +27,40 @@ class WineDB {
 
   val getAvgRatingCountry = (country: String) => {
     val iter = getCSVIterator(FILE_PATH);
-    val filteredIt = iter.filter(_(COUNTRY).equals(country));
-    val iter2 = getCSVIterator(FILE_PATH);
-    val filteredIt2 = iter2.filter(_(COUNTRY).equals(country))
-    filteredIt.foldLeft(0.0)(_ + _(RATING).toDouble) / filteredIt2.length 
+    val filteredIt = iter.filter(_ (COUNTRY).equals(country));
+    if (filteredIt.hasNext)
+      val iter2 = getCSVIterator(FILE_PATH);
+      val filteredIt2 = iter2.filter(_ (COUNTRY).equals(country))
+      filteredIt.foldLeft(0.0)(_ + _ (RATING).toDouble) / filteredIt2.length
+    else
+      null
+
   }
 
   val getWineByYear = (year: Int) => println("salut")
- 
- 
+
+
   val getTotalPriceWineryWines = (winery: String) => {
     val iter = getCSVIterator(FILE_PATH);
-    val filteredIt = iter.filter(_(WINERY).equals(winery))
-    filteredIt.foldLeft(0.0)(_ + _(PRICE).toDouble)
+    val filteredIt = iter.filter(_ (WINERY).equals(winery))
+    filteredIt.foldLeft(0.0)(_ + _ (PRICE).toDouble)
   }
 
   val getWineByName = (wineName: String) => {
     val iter = getCSVIterator(FILE_PATH);
-    val filteredIt = iter.filter(_(NAME).equals(wineName))
-    val foundWine = filteredIt.next()
-    if (foundWine != null) 
-          new Wine(foundWine(NAME), foundWine(YEAR).toInt, foundWine(PRICE).toDouble, 
-          new Country(foundWine(COUNTRY)), new Region(foundWine(REGION)), new Winery(foundWine(WINERY)),
-          new Rating(foundWine(RATING).toDouble, foundWine(NB_RATINGS).toInt));
-    else 
-        null
+    val filteredIt = iter.filter(_ (NAME).equals(wineName))
+    if (filteredIt.hasNext)
+      val foundWine = filteredIt.next()
+      new Wine(foundWine(NAME), foundWine(YEAR).toInt, foundWine(PRICE).toDouble,
+        new Country(foundWine(COUNTRY)), new Region(foundWine(REGION)), new Winery(foundWine(WINERY)),
+        new Rating(foundWine(RATING).toDouble, foundWine(NB_RATINGS).toInt));
+    else
+      null
   }
 
   val getNbWineByRegion = (region: String) => {
     val iter = getCSVIterator(FILE_PATH);
-    val filteredIt = iter.filter(_(REGION).equals(region))
+    val filteredIt = iter.filter(_ (REGION).equals(region))
     filteredIt.size
   }
 
