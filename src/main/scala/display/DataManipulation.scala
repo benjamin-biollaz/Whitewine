@@ -70,10 +70,10 @@ class DataManipulation {
   def getInputChangeWinePrice = () => {
     val inputChangeWinePrice = getInput("For which wine do you want to change the price?")
     val wine = wineDB.getWineByName(inputChangeWinePrice)
-    val newPrice = getInput("How should we call it?")
+    val newPrice = getInput("How much would you put for this wine ?")
     //use of case class copy property to avoid concurrency problem
     //in our case it is useless as no concurrent access is possible
-    val newWine = wine.copy(name = newPrice)
+    val newWine = wine.copy(price = newPrice)
     println(newWine)
   }
 
