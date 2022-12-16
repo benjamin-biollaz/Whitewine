@@ -38,10 +38,12 @@ class WineDB {
 
   val getWineByYear = (year: Int) => {
     val iter = getCSVIterator(FILE_PATH);
-    val filteredIt = iter.filter(_ (YEAR).equals(year));
-    if (filteredIt.hasNext) {
-
-    } else
+    val filteredIt = iter.filter(_ (YEAR).equals(year.toString));
+    if (filteredIt.hasNext)
+        filteredIt.map(w => new Wine(w(NAME), w(YEAR).toInt, w(PRICE).toDouble,
+          new Country(w(COUNTRY)), new Region(w(REGION)), new Winery(w(WINERY)),
+          new Rating(w(RATING).toDouble, w(NB_RATINGS).toInt)))
+    else
       null
   }
 
