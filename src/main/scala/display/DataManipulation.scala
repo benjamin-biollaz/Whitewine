@@ -1,11 +1,14 @@
 package display
 
+import classes.{Country, Region, Winery, Rating}
 import dal.WineDB
+import manipulation.WineManager
 
 import java.util.Scanner
 
 class DataManipulation {
   val wineDB = new WineDB();
+  val wineManager = new WineManager();
 
     def getManipulateChoice = () => {
       println("What do you want to do ? \n" +
@@ -34,8 +37,15 @@ class DataManipulation {
   }
 
   def getInputAddWine = () => {
-    val inputAddWine = getInput("Which wine do you want to add?");
-    // do something....
+    val inputAddWineName = getInput("Which wine do you want to add?");
+    val inputAddWineYear = getInput("What is the year of the wine?");
+    val inputAddWinePrice = getInput("What is the price of the wine?");
+    val inputAddWineCountry = getInput("What is the country of the wine?");
+    val inputAddWineRegion = getInput("What is the region of the wine");
+    val inputAddWineWinery = getInput("What is the wine's winery?");
+    val inputAddWineRating = getInput("What is the wine's rate?");
+     val newWine = wineManager.addWine(inputAddWineName, inputAddWineYear.toInt, inputAddWinePrice.toDouble, new Country(inputAddWineCountry), new Region(inputAddWineRegion),  new Winery(inputAddWineWinery), new Rating(inputAddWineRating.toDouble, 1))
+    println("successfully added : " + newWine);
   }
 
   def getInputRemoveWine = () => {
