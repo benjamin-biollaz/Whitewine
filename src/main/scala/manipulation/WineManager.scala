@@ -8,6 +8,18 @@ class WineManager {
    
   }
 
+/*  val getWineByName = (wineName: String) => {
+    val iter = getCSVIterator(FILE_PATH);
+    val filteredIt = iter.filter(_ (NAME).equals(wineName))
+    if (filteredIt.hasNext)
+      val foundWine = filteredIt.next()
+      new Wine(foundWine(NAME), foundWine(YEAR).toInt, foundWine(PRICE).toDouble,
+        new Country(foundWine(COUNTRY)), new Region(foundWine(REGION)), new Winery(foundWine(WINERY)),
+        new Rating(foundWine(RATING).toDouble, foundWine(NB_RATINGS).toInt));
+    else
+      null
+  }*/
+
   //remove wine
   val removeWine = () => {
 
