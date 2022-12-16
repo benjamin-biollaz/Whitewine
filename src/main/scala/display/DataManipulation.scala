@@ -1,8 +1,6 @@
 package display
 
-import classes.{Country, Region, Winery, Rating}
 import dal.WineDB
-import manipulation.WineManager
 
 import java.util.Scanner
 
@@ -49,28 +47,41 @@ class DataManipulation {
   }
 
   def getInputRemoveWine = () => {
-    val inputRemoveWine = getInput("Which wine do you want to remove?");
-    val wine = wineDB.getWineByName(inputRemoveWine);
+    val inputRemoveWine = getInput("Which wine do you want to remove?")
+    val wine = wineDB.getWineByName(inputRemoveWine)
     // do something....
   }
 
 
   def getInputChangeWineName = () => {
-    val inputChangeWineName = getInput("For which wine do you want to change its name?");
-    val wine = wineDB.getWineByName(inputChangeWineName);
-    // do something....
+    val inputChangeWineName = getInput("For which wine do you want to change its name?")
+    val wine = wineDB.getWineByName(inputChangeWineName)
+    println(wine)
+    val newName = getInput("How should we call it?")
+    //use of case class copy property to avoid concurrency problem
+    //in our case it is useless as no concurrent access is possible
+    val newWine = wine.copy(name = newName)
+    println(newWine)
   }
 
   def getInputChangeWinePrice = () => {
-    val inputChangeWinePrice = getInput("For which wine do you want to change the price?");
-    val wine = wineDB.getWineByName(inputChangeWinePrice);
-    // do something....
+    val inputChangeWinePrice = getInput("For which wine do you want to change the price?")
+    val wine = wineDB.getWineByName(inputChangeWinePrice)
+    val newPrice = getInput("How should we call it?")
+    //use of case class copy property to avoid concurrency problem
+    //in our case it is useless as no concurrent access is possible
+    val newWine = wine.copy(name = newPrice)
+    println(newWine)
   }
 
   def getInputRateWine = () => {
-    val inputRateWine = getInput("Which wine do you want to rate ");
-    val wine = wineDB.getWineByName(inputRateWine);
-    // do something....
+    val inputRateWine = getInput("Which wine do you want to rate ")
+    val wine = wineDB.getWineByName(inputRateWine)
+    println(wine)
+    val newRate = getInput("On a scale of 1 to 5, how would you rate this wine ?")
+    val newRateAverage = wine.rateWine(newRate.toDouble)
+    val newWine = wine.copy(rating = Rating(newRateAverage, wine.rating.nb_rating+1))
+    println(newWine)
   }
 
 
