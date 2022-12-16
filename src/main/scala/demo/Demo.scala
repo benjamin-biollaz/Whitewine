@@ -19,6 +19,6 @@ import java.util.Scanner
   val inputChoice = scanChoice.nextLine();
   inputChoice match {
     case "1" => dataExploration.getInformationFromCSV();
-    case "2" => dataManipulation.manipulateInformation();
+    case "2" => dataManipulation.getManipulateChoice();
   }
 }
