@@ -1,8 +1,11 @@
 package display
 
+import classes.{Country, Rating, Region, Winery}
 import dal.WineDB
+import manipulation.WineManager
 
 import java.util.Scanner
+
 
 class DataManipulation {
   val wineDB = new WineDB();
