@@ -34,10 +34,16 @@ class WineDB {
       filteredIt.foldLeft(0.0)(_ + _ (RATING).toDouble) / filteredIt2.length
     else
       null
-
   }
 
-  val getWineByYear = (year: Int) => println("salut")
+  val getWineByYear = (year: Int) => {
+    val iter = getCSVIterator(FILE_PATH);
+    val filteredIt = iter.filter(_ (YEAR).equals(year));
+    if (filteredIt.hasNext) {
+
+    } else
+      null
+  }
 
 
   val getTotalPriceWineryWines = (winery: String) => {
