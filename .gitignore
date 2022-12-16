@@ -17,3 +17,8 @@ target/
 
 # general
 *.class
+
+.name
+misc.xml
+modules.xml
+scala_compiler.xml
