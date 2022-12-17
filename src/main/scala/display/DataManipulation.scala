@@ -12,16 +12,12 @@ class DataManipulation {
   val wineManager = new WineManager();
 
     def getManipulateChoice = () => {
-      println("What do you want to do ? \n" +
+      val inputChoice = getInput("What do you want to do ? \n" +
         "1. Add a wine? \n" +
         "2. Remove a wine? \n" +
         "3. Change a wine's name? \n" +
         "4. Modify a wine's price? \n" +
         "5. Rate a wine?")
-
-
-      val scanChoice = new Scanner(System.in);
-      val inputChoice = scanChoice.nextLine();
       inputChoice match {
         case "1" => getInputAddWine();
         case "2" => getInputRemoveWine();
@@ -35,18 +31,6 @@ class DataManipulation {
     println(message)
     val scan = new Scanner(System.in);
     scan.nextLine();
-  }
-
-  def getInputAddWine = () => {
-    val inputAddWineName = getInput("Which wine do you want to add?");
-    val inputAddWineYear = getInput("What is the year of the wine?");
-    val inputAddWinePrice = getInput("What is the price of the wine?");
-    val inputAddWineCountry = getInput("What is the country of the wine?");
-    val inputAddWineRegion = getInput("What is the region of the wine");
-    val inputAddWineWinery = getInput("What is the wine's winery?");
-    val inputAddWineRating = getInput("What is the wine's rate?");
-     val newWine = wineManager.addWine(inputAddWineName, inputAddWineYear.toInt, inputAddWinePrice.toDouble, new Country(inputAddWineCountry), new Region(inputAddWineRegion),  new Winery(inputAddWineWinery), new Rating(inputAddWineRating.toDouble, 1))
-    println("successfully added : " + newWine);
   }
 
   def getInputRemoveWine = () => {
@@ -83,5 +67,17 @@ class DataManipulation {
     println(newWine)
   }
 
-
+  def getInputAddWine = () => {
+    val name = getInput("Which wine do you want to add?");
+    val year = getInput("What is the year of the wine?");
+    val price = getInput("What is the price of the wine?");
+    val country = getInput("What is the country of the wine?");
+    val region = getInput("What is the region of the wine");
+    val winery = getInput("What is the wine's winery?");
+    val rating = getInput("What is the wine's rate?");
+    val newWine = wineManager.addWine(name, year.toInt, price.toDouble, new Country(country),
+      new Region(region),  new Winery(winery), new Rating(rating.toDouble, 1))
+    println("successfully added : " + newWine);
+  }
+  
 }
