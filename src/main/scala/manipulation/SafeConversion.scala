@@ -1,5 +1,8 @@
 package manipulation
 
+/**
+ * SafeConversion class convert types with regards to exception.
+ */
 class SafeConversion {
   /**
    * convert string to int with regards to number format exception

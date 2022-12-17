@@ -31,7 +31,7 @@ class WineManager {
   }
 
   /**
-   * Modify a wine price
+   * Modify a wine price using the case class .copy method
    */
   val modifyWinePrice = (wine:Wine, newPrice: Double) => {
     //use of case class copy property to avoid concurrency problem
@@ -40,7 +40,7 @@ class WineManager {
   }
 
   /**
-   * Modify a wine name
+   * Modify a wine name using the case class .copy method
    */
   val modifyWineName = (wine:Wine, newName: String) => {
     //use of case class copy property to avoid concurrency problem
