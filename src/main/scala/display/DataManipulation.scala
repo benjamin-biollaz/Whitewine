@@ -61,19 +61,16 @@ class DataManipulation {
     val wine = wineDB.getWineByName(inputChangeWineName)
     println(wine)
     val newName = getInput("How should we call it?")
-    //use of case class copy property to avoid concurrency problem
-    //in our case it is useless as no concurrent access is possible
-    val newWine = wine.copy(name = newName)
-    println(newWine)
+    val newWine = wineManager.modifyWineName(wine, newName)
+      println(newWine)
   }
 
   def getInputChangeWinePrice = () => {
     val inputChangeWinePrice = getInput("For which wine do you want to change the price?")
     val wine = wineDB.getWineByName(inputChangeWinePrice)
+    println(wine)
     val newPrice = getInput("How much would you put for this wine ?")
-    //use of case class copy property to avoid concurrency problem
-    //in our case it is useless as no concurrent access is possible
-    val newWine = wine.copy(price = newPrice.toDouble)
+    val newWine = wineManager.modifyWinePrice(wine, newPrice.toDouble)
     println(newWine)
   }
 
@@ -82,8 +79,7 @@ class DataManipulation {
     val wine = wineDB.getWineByName(inputRateWine)
     println(wine)
     val newRate = getInput("On a scale of 1 to 5, how would you rate this wine ?")
-    val newRateAverage = wine.rateWine(newRate.toDouble)
-    val newWine = wine.copy(rating = Rating(newRateAverage, wine.rating.nb_rating+1))
+    val newWine = wineManager.rateWine(wine, newRate.toDouble)
     println(newWine)
   }
 
