@@ -13,7 +13,8 @@ class DataExploration {
       "2. Get number of wine for a region? \n" +
       "3. Get total prices of all wine of a winery? \n" +
       "4. Get average wine rating of a country? \n" +
-      "5. Get all wines for a year ?");
+      "5. Get all wines for a year ?\n" +
+      "6. Get all wines in the dataset ?");
 
     inputChoice match {
       case "1" => getInputWineByName();
@@ -21,6 +22,7 @@ class DataExploration {
       case "3" => getInputWinery();
       case "4" => getInputCountry();
       case "5" => getAllWinesByYear();
+      case "6" => getAllWines();
     }
   }
 
@@ -34,6 +36,11 @@ class DataExploration {
     val input = getInput("For which year do you want to display wines ?");
     val wines = wineDB.getWineByYear(input.toInt);
     if (wines == null) println("No wines for " + input) else for (wine <- wines) println(wine)
+  }
+
+  def getAllWines = () => {
+    val wines = wineDB.getAllWines()
+    if (wines == null) println("No wines in the dataset") else for (wine <- wines) println(wine)
   }
 
   def getInputWineByName = () => {

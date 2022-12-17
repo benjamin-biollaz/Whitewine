@@ -25,6 +25,128 @@ class WineDB {
   codec.onMalformedInput(CodingErrorAction.REPLACE)
   codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
 
+  /*
+  Generic functions
+  */
+
+  /**
+   * Create a new wine using the csv line fields.
+   * Number format exceptions are checked before creation.
+   */
+  val createWineFromCsvLine = (csvLine: Array[String]) => {
+    // numerical data is converted with regards
+    // to number format exceptions
+    val year = stringToInt(csvLine(YEAR))
+    val nb_ratings = stringToInt(csvLine(NB_RATINGS))
+    val price = stringToDouble(csvLine(PRICE))
+    val avg_rating = stringToDouble(csvLine(RATING))
+
+    //create a new wine using the csv line fields
+    Wine(csvLine(NAME), year, price, new Country(csvLine(COUNTRY)),
+      new Region(csvLine(REGION)), new Winery(csvLine(WINERY)),
+      new Rating(avg_rating, nb_ratings))
+  }
+
+  /**
+   * returns an iterator of array of strings,
+   * each line cell being a csv line
+   */
+  val getCSVIterator = (fileName: String) => {
+    val src = io.Source.fromFile(fileName)
+    src.getLines().map(_.split(","))
+  }
+
+  /**
+   * convert a csv iterator (Array[String] to a wine objects list
+   */
+  val iteratorToWinesList = (csvIterator: Iterator[Array[String]]) => {
+    if (csvIterator.hasNext)
+      csvIterator.map(w => createWineFromCsvLine(w))
+    else
+      null
+  }
+
+  /**
+   * convert string to int with regards to number format exception
+   */
+  val stringToInt = (s: String) => {
+    try {
+      s.toInt
+    } catch {
+      case nb: NumberFormatException =>
+        println(s + " cannot be converted to a number, 0 was attributed to it instead.")
+        0
+    }
+  }
+
+  /**
+   * convert string to double with regards to number format exception
+   */
+  val stringToDouble = (s: String) => {
+    try {
+      s.toDouble
+    } catch {
+      case nb: NumberFormatException =>
+        println(s + " cannot be converted to a number, 0 was attributed to it instead.")
+        0
+    }
+  }
+
+  /*
+  List members functions
+  */
+
+  /**
+   * get all wines for a given year
+   */
+  val getWineByYear = (year: Int) => {
+    val iter = getCSVIterator(FILE_PATH);
+    val filteredIt = iter.filter(_ (YEAR).equals(year.toString))
+    iteratorToWinesList(filteredIt)
+  }
+
+  /**
+   * get all wines in the dataset
+   */
+  val getAllWines = () => {
+    val iter = getCSVIterator(FILE_PATH)
+    iteratorToWinesList(iter)
+  }
+
+  /*
+  Single member functions
+  */
+
+  /**
+   * search for a wine with the given name in the dataset
+   */
+  val getWineByName = (wineName: String) => {
+    val iter = getCSVIterator(FILE_PATH);
+    val filteredIt = iter.filter(_ (NAME).equals(wineName))
+    if (filteredIt.hasNext)
+      val foundWine = filteredIt.next()
+      createWineFromCsvLine(foundWine)
+    else
+      null
+  }
+
+  /*
+  Aggregation functions
+  */
+
+  /**
+   * Get the total price of all wines price
+   * for a winery.
+   */
+  val getTotalPriceWineryWines = (winery: String) => {
+    val iter = getCSVIterator(FILE_PATH);
+    val filteredIt = iter.filter(_ (WINERY).equals(winery))
+    filteredIt.foldLeft(0.0)(_ + _ (PRICE).toDouble)
+  }
+
+  /**
+   * Get the average of wines rating for a country.
+   */
   val getAvgRatingCountry = (country: String) => {
     val iter = getCSVIterator(FILE_PATH);
     val filteredIt = iter.filter(_ (COUNTRY).equals(country));
@@ -36,47 +158,23 @@ class WineDB {
       null
   }
 
-  val getWineByYear = (year: Int) => {
-    val iter = getCSVIterator(FILE_PATH);
-    val filteredIt = iter.filter(_ (YEAR).equals(year.toString));
-    if (filteredIt.hasNext)
-        filteredIt.map(w => new Wine(w(NAME), w(YEAR).toInt, w(PRICE).toDouble,
-          new Country(w(COUNTRY)), new Region(w(REGION)), new Winery(w(WINERY)),
-          new Rating(w(RATING).toDouble, w(NB_RATINGS).toInt)))
-    else
-      null
-  }
-
-
-  val getTotalPriceWineryWines = (winery: String) => {
-    val iter = getCSVIterator(FILE_PATH);
-    val filteredIt = iter.filter(_ (WINERY).equals(winery))
-    filteredIt.foldLeft(0.0)(_ + _ (PRICE).toDouble)
-  }
-
-  val getWineByName = (wineName: String) => {
-    val iter = getCSVIterator(FILE_PATH);
-    val filteredIt = iter.filter(_ (NAME).equals(wineName))
-    if (filteredIt.hasNext)
-      val foundWine = filteredIt.next()
-      new Wine(foundWine(NAME), foundWine(YEAR).toInt, foundWine(PRICE).toDouble,
-        new Country(foundWine(COUNTRY)), new Region(foundWine(REGION)), new Winery(foundWine(WINERY)),
-        new Rating(foundWine(RATING).toDouble, foundWine(NB_RATINGS).toInt));
-    else
-      null
-  }
-
+  /**
+   * Gets the number of wines in a region.
+   */
   val getNbWineByRegion = (region: String) => {
     val iter = getCSVIterator(FILE_PATH);
     val filteredIt = iter.filter(_ (REGION).equals(region))
     filteredIt.size
   }
 
-  val getCSVIterator = (fileName: String) => {
-    val src = io.Source.fromFile(fileName)
-    src.getLines().map(_.split(","))
-  }
+  /*
+  Pure display functions
+  */
 
+  /**
+   * Display the dataset in the console without mapping
+   * it to objects
+   */
   val readCSV = () => {
     val bufferedSource = io.Source.fromFile("11-WhiteWine.csv")
 
