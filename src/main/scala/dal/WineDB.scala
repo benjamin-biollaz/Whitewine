@@ -6,7 +6,15 @@ import java.nio.charset.UnmappableCharacterException;
 import java.nio.charset.CodingErrorAction
 import scala.io.Codec
 
-
+/**
+ * The wine data access class calibrated for CSV files.
+ * Its functions are organized as follows:
+ * 1. Generic functions
+ * 2. List member functions
+ * 3. Single member functions
+ * 4. Aggregation functions
+ * 5. Pure display functions
+ */
 class WineDB {
 
   //CSV file constant
