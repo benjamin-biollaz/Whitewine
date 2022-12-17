@@ -73,7 +73,7 @@ class DataManipulation {
     val newPrice = getInput("How much would you put for this wine ?")
     //use of case class copy property to avoid concurrency problem
     //in our case it is useless as no concurrent access is possible
-    val newWine = wine.copy(price = newPrice)
+    val newWine = wine.copy(price = newPrice.toDouble)
     println(newWine)
   }
 
