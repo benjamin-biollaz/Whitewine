@@ -1,14 +1,16 @@
 package display
 
 import dal.WineDB
+import manipulation.InputManager
 
 import java.util.Scanner
 
 class DataExploration {
   val wineDB = new WineDB();
+  val inputManager = new InputManager();
 
   def getInformationFromCSV = () => {
-    val inputChoice = getInput("What do you want to do ? \n" +
+    val inputChoice = inputManager.getInput("What do you want to do ? \n" +
       "1. Get a wine details by name? \n" +
       "2. Get number of wine for a region? \n" +
       "3. Get total prices of all wine of a winery? \n" +
@@ -26,14 +28,8 @@ class DataExploration {
     }
   }
 
-  def getInput = (message: String) => {
-    println(message)
-    val scan = new Scanner(System.in);
-    scan.nextLine();
-  }
-
   def getAllWinesByYear = () => {
-    val input = getInput("For which year do you want to display wines ?");
+    val input = inputManager.getInput("For which year do you want to display wines ?");
     val wines = wineDB.getWineByYear(input.toInt);
     if (wines == null) println("No wines for " + input) else for (wine <- wines) println(wine)
   }
@@ -44,23 +40,23 @@ class DataExploration {
   }
 
   def getInputWineByName = () => {
-    val inputName = getInput("Enter the name of the wine ?");
+    val inputName = inputManager.getInput("Enter the name of the wine ?");
     val wine = wineDB.getWineByName(inputName);
     if (wine == null) println("Wine not found") else println(wine);
   }
 
   def getInputRegion = () => {
-    val inputRegion = getInput("For which region do you want the total price of wines?");
+    val inputRegion = inputManager.getInput("For which region do you want the total price of wines?");
     println("There's " + wineDB.getNbWineByRegion(inputRegion) + " wines in " + inputRegion);
   }
 
   def getInputWinery = () => {
-    val inputWinery = getInput("For which winery do you want the total price of wines?");
+    val inputWinery = inputManager.getInput("For which winery do you want the total price of wines?");
     println("The total price of all the wines from" + inputWinery + " is :" + wineDB.getTotalPriceWineryWines(inputWinery) + "CHF")
   }
 
   def getInputCountry = () => {
-    val inputCountry = getInput("For which country you want the average rating?")
+    val inputCountry = inputManager.getInput("For which country you want the average rating?")
     println("The average wine rating for  " + inputCountry + " is " + wineDB.getAvgRatingCountry(inputCountry))
   }
 

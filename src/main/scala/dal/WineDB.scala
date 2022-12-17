@@ -1,8 +1,9 @@
 package dal
 
 import classes.*
-import java.nio.charset.UnmappableCharacterException;
+import manipulation.SafeConversion
 
+import java.nio.charset.UnmappableCharacterException
 import java.nio.charset.CodingErrorAction
 import scala.io.Codec
 
@@ -44,10 +45,11 @@ class WineDB {
   val createWineFromCsvLine = (csvLine: Array[String]) => {
     // numerical data is converted with regards
     // to number format exceptions
-    val year = stringToInt(csvLine(YEAR))
-    val nb_ratings = stringToInt(csvLine(NB_RATINGS))
-    val price = stringToDouble(csvLine(PRICE))
-    val avg_rating = stringToDouble(csvLine(RATING))
+    val converter = new SafeConversion();
+    val year = converter.stringToInt(csvLine(YEAR))
+    val nb_ratings = converter.stringToInt(csvLine(NB_RATINGS))
+    val price = converter.stringToDouble(csvLine(PRICE))
+    val avg_rating = converter.stringToDouble(csvLine(RATING))
 
     //create a new wine using the csv line fields
     Wine(csvLine(NAME), year, price, new Country(csvLine(COUNTRY)),
@@ -74,31 +76,7 @@ class WineDB {
       null
   }
 
-  /**
-   * convert string to int with regards to number format exception
-   */
-  val stringToInt = (s: String) => {
-    try {
-      s.toInt
-    } catch {
-      case nb: NumberFormatException =>
-        println(s + " cannot be converted to a number, 0 was attributed to it instead.")
-        0
-    }
-  }
-
-  /**
-   * convert string to double with regards to number format exception
-   */
-  val stringToDouble = (s: String) => {
-    try {
-      s.toDouble
-    } catch {
-      case nb: NumberFormatException =>
-        println(s + " cannot be converted to a number, 0 was attributed to it instead.")
-        0
-    }
-  }
+ 
 
   /*
   List members functions
