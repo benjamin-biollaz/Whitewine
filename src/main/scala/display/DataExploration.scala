@@ -5,11 +5,24 @@ import manipulation.{InputManager, SafeConversion}
 
 import java.util.Scanner
 
+/**
+ *A class with methods to explore the CSV file
+ * @param getAllWinesByYear Get the user's year input and call the method getWineByYear from the WineDB class
+ * @param getAllWines call the method getAllWines from the WineDB
+ * @param getInputWineByName Get the user's input and call the method getWineByName from the WineDB class
+ * @param getInputRegion Get the user's region input and call the method getNbWineByRegion from the WineDB class
+ * @param getInputWinery Get the user's winery input and call the method getTotalPriceWineryWines from the WineDB class
+ * @param getInputCountry Get the user's country input and call the method getAvgRatingCountry from the WineDB class
+ */
+
 class DataExploration {
   val wineDB = new WineDB();
   val inputManager = new InputManager();
   val converter = new SafeConversion()
 
+  /**
+   * Console display for the user
+   */
   def getInformationFromCSV = () => {
     val inputChoice = inputManager.getInput("What do you want to do ? \n" +
       "1. Get a wine details by name? \n" +
@@ -19,6 +32,9 @@ class DataExploration {
       "5. Get all wines for a year ?\n" +
       "6. Get all wines in the dataset ?");
 
+    /**
+     * Match case to display the user's choice
+     */
     inputChoice match {
       case "1" => getInputWineByName();
       case "2" => getInputRegion();
