@@ -15,23 +15,25 @@ class DataManipulation {
     def getManipulateChoice = () => {
       val inputChoice = inputManager.getInput("What do you want to do ? \n" +
         "1. Add a wine? \n" +
-        "2. Remove a wine? \n" +
+        "2. Get a discount on a wine price ? \n" +
         "3. Change a wine's name? \n" +
         "4. Modify a wine's price? \n" +
         "5. Rate a wine?")
       inputChoice match {
         case "1" => getInputAddWine();
-        case "2" => getInputRemoveWine();
+        case "2" => getInputDiscountedPrice();
         case "3" => getInputChangeWineName();
         case "4" => getInputChangeWinePrice();
         case "5" => getInputRateWine();
       }
     }
 
-  def getInputRemoveWine = () => {
-    val inputRemoveWine = inputManager.getInput("Which wine do you want to remove?")
+  def getInputDiscountedPrice = () => {
+    val inputRemoveWine = inputManager.getInput("For which wine do you want a discount ?")
     val wine = wineDB.getWineByName(inputRemoveWine)
-    // do something....
+    println("Initial price: CHF" + wine.price)
+    val discountedWine = wineManager.getARandomDiscountedPrice(wine)
+    println("Discounted price: CHF" + discountedWine)
   }
 
 
