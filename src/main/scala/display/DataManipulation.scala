@@ -44,7 +44,7 @@ class DataManipulation {
     else {
       println("Initial price: CHF" + wine.price)
       val discountedWine = wineManager.getARandomDiscountedPrice(wine)
-      println("Discounted price: CHF" + discountedWine)
+      println("Discounted price: CHF" + discountedWine.price)
     }
   }
 
