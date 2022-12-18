@@ -1,13 +1,14 @@
 package display
 
 import dal.WineDB
-import manipulation.InputManager
+import manipulation.{InputManager, SafeConversion}
 
 import java.util.Scanner
 
 class DataExploration {
   val wineDB = new WineDB();
   val inputManager = new InputManager();
+  val converter = new SafeConversion()
 
   def getInformationFromCSV = () => {
     val inputChoice = inputManager.getInput("What do you want to do ? \n" +
@@ -29,7 +30,7 @@ class DataExploration {
   }
 
   def getAllWinesByYear = () => {
-    val input = inputManager.getInput("For which year do you want to display wines ?");
+    val input = converter.stringToInt(inputManager.getInput("For which year do you want to display wines ?"))
     val wines = wineDB.getWineByYear(input.toInt);
     if (wines == null) println("No wines for " + input) else for (wine <- wines) println(wine)
   }
@@ -57,7 +58,8 @@ class DataExploration {
 
   def getInputCountry = () => {
     val inputCountry = inputManager.getInput("For which country you want the average rating?")
-    println("The average wine rating for  " + inputCountry + " is " + wineDB.getAvgRatingCountry(inputCountry))
+    val averageRating = wineDB.getAvgRatingCountry(inputCountry)
+    if (averageRating == null) println("No wines in this country.") else println("The average wine rating for" + inputCountry + " is " + averageRating)
   }
 
 }
