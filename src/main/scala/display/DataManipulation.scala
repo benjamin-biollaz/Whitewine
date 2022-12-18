@@ -7,6 +7,10 @@ import manipulation.{InputManager, SafeConversion, WineManager}
 import java.util.Scanner
 
 
+/**
+ *A class with methods to get the user's input to manipulate the data
+ */
+
 class DataManipulation {
   val wineDB = new WineDB();
   val wineManager = new WineManager();
@@ -28,6 +32,9 @@ class DataManipulation {
       }
     }
 
+  /**
+   * getInputDiscountedPrice Get the user's wine choice and get the wine with getWineByName and call getARandomDiscountedPrice from WineManager to apply a random discount
+   */
   def getInputDiscountedPrice = () => {
     val inputRemoveWine = inputManager.getInput("For which wine do you want a discount ?")
     val wine = wineDB.getWineByName(inputRemoveWine)
@@ -36,7 +43,9 @@ class DataManipulation {
     println("Discounted price: CHF" + discountedWine)
   }
 
-
+  /**
+   * getInputChangeWineName Get the user's wine input and get the wine with getWineByName and call modifyWineName from WineManager to modify the wines name
+   */
   def getInputChangeWineName = () => {
     val inputChangeWineName = inputManager.getInput("For which wine do you want to change its name?")
     val wine = wineDB.getWineByName(inputChangeWineName)
@@ -46,6 +55,9 @@ class DataManipulation {
       println(newWine)
   }
 
+  /**
+   * getInputChangeWinePrice Get the user's wine input and get the wine with getWineByName and call modifyWinePrice from WineManager to modify the wines name
+   */
   def getInputChangeWinePrice = () => {
     val inputChangeWinePrice = inputManager.getInput("For which wine do you want to change the price?")
     val wine = wineDB.getWineByName(inputChangeWinePrice)
@@ -55,6 +67,9 @@ class DataManipulation {
     println(newWine)
   }
 
+  /**
+   * getInputRateWine Get the user's wine input and get the wine with getWineByName and call rateWine from WineManager to modify the wines name
+   */
   def getInputRateWine = () => {
     val inputRateWine = inputManager.getInput("Which wine do you want to rate ")
     val wine = wineDB.getWineByName(inputRateWine)
@@ -64,6 +79,9 @@ class DataManipulation {
     println(newWine)
   }
 
+  /**
+   * getInputAddWine Get the user's input from all the needed methods to create a new wine and call the method addWine from WineManager
+   */
   def getInputAddWine = () => {
     val converter = new SafeConversion()
     val name = inputManager.getInput("Which wine do you want to add?");
