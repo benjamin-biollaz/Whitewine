@@ -64,7 +64,7 @@ class DataExploration {
   def getInputWineByName = () => {
     val inputName = inputManager.getInput("Enter the name of the wine ?");
     val wine = wineDB.getWineByName(inputName);
-    if (wine == null) println("Wine not found") else println(wine);
+    if (wine == null) println("Wine not found.") else println(wine);
   }
 
   /**
@@ -80,7 +80,7 @@ class DataExploration {
    */
   def getInputWinery = () => {
     val inputWinery = inputManager.getInput("For which winery do you want the total price of wines?");
-    println("The total price of all the wines from" + inputWinery + " is :" + wineDB.getTotalPriceWineryWines(inputWinery) + "CHF")
+    println("The total price of all the wines from " + inputWinery + " is :" + wineDB.getTotalPriceWineryWines(inputWinery) + "CHF")
   }
 
   /**
@@ -89,7 +89,7 @@ class DataExploration {
   def getInputCountry = () => {
     val inputCountry = inputManager.getInput("For which country you want the average rating?")
     val averageRating = wineDB.getAvgRatingCountry(inputCountry)
-    if (averageRating == null) println("No wines in this country.") else println("The average wine rating for" + inputCountry + " is " + averageRating)
+    if (averageRating == null) println("No wines in this country.") else println("The average wine rating for " + inputCountry + " is " + averageRating)
   }
 
 }
