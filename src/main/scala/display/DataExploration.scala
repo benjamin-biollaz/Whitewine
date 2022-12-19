@@ -18,18 +18,16 @@ class DataExploration {
   /**
    * Prompt the the user for which data exploration he wants to perform.
    */
-  def getInformationFromCSV = () => {
+  def getInformationFromCSV(): Unit = {
     val inputChoice = inputManager.getInput("What do you want to do ? \n" +
       "1. Get a wine details by name? \n" +
       "2. Get number of wine for a region? \n" +
       "3. Get total prices of all wine of a winery? \n" +
       "4. Get average wine rating of a country? \n" +
       "5. Get all wines for a year ?\n" +
-      "6. Get all wines in the dataset ?");
+      "6. Get all wines in the dataset ?\n" +
+      "7. Exit the program.");
 
-    /**
-     * Match case to display the user's choice
-     */
     inputChoice match {
       case "1" => getInputWineByName();
       case "2" => getInputRegion();
@@ -37,7 +35,9 @@ class DataExploration {
       case "4" => getInputCountry();
       case "5" => getAllWinesByYear();
       case "6" => getAllWines();
+      case "7" => System.exit(0)
     }
+    getInformationFromCSV()
   }
 
   /**

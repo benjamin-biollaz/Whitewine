@@ -17,26 +17,30 @@ class DataManipulation {
   val inputManager = new InputManager()
   val converter = new SafeConversion
 
-  def getManipulateChoice = () => {
-    val inputChoice = inputManager.getInput("What do you want to do ? \n" +
+
+  def getManipulateChoice(): Unit = {
+    val inputChoice = inputManager.getInput("\nWhat do you want to do ? \n" +
       "1. Add a wine? \n" +
       "2. Get a discount on a wine price ? \n" +
       "3. Change a wine's name? \n" +
       "4. Modify a wine's price? \n" +
-      "5. Rate a wine?")
+      "5. Rate a wine?\n" +
+      "6. Exit the program.")
     inputChoice match {
       case "1" => getInputAddWine();
       case "2" => getInputDiscountedPrice();
       case "3" => getInputChangeWineName();
       case "4" => getInputChangeWinePrice();
       case "5" => getInputRateWine();
+      case "6" => System.exit(0)
     }
+    getManipulateChoice()
   }
 
   /**
    * getInputDiscountedPrice Get the user's wine choice and get the wine with getWineByName and call getARandomDiscountedPrice from WineManager to apply a random discount
    */
-  def getInputDiscountedPrice = () => {
+  def getInputDiscountedPrice(): Unit = {
     val inputRemoveWine = inputManager.getInput("For which wine do you want a discount ?")
     val wine = wineDB.getWineByName(inputRemoveWine)
     if (wine == null)
@@ -51,7 +55,7 @@ class DataManipulation {
   /**
    * getInputChangeWineName Get the user's wine input and get the wine with getWineByName and call modifyWineName from WineManager to modify the wines name
    */
-  def getInputChangeWineName = () => {
+  def getInputChangeWineName(): Unit = {
     val inputChangeWineName = inputManager.getInput("For which wine do you want to change its name?")
     val wine = wineDB.getWineByName(inputChangeWineName)
     if (wine == null) {
@@ -67,7 +71,7 @@ class DataManipulation {
   /**
    * getInputChangeWinePrice Get the user's wine input and get the wine with getWineByName and call modifyWinePrice from WineManager to modify the wines name
    */
-  def getInputChangeWinePrice = () => {
+  def getInputChangeWinePrice():Unit = {
     val inputChangeWinePrice = inputManager.getInput("For which wine do you want to change the price?")
     val wine = wineDB.getWineByName(inputChangeWinePrice)
     if (wine == null) {
@@ -84,7 +88,7 @@ class DataManipulation {
    * getInputRateWine Get the user's wine input and get the wine with getWineByName and call
    * rateWine from WineManager to modify the wines name
    */
-  def getInputRateWine = () => {
+  def getInputRateWine():Unit = {
     val inputRateWine = inputManager.getInput("Which wine do you want to rate ")
     val wine = wineDB.getWineByName(inputRateWine)
     if (wine == null) {
@@ -100,7 +104,7 @@ class DataManipulation {
   /**
    * getInputAddWine Get the user's input from all the needed methods to create a new wine and call the method addWine from WineManager
    */
-  def getInputAddWine = () => {
+  def getInputAddWine():Unit = {
     val converter = new SafeConversion()
     val name = inputManager.getInput("Which wine do you want to add?");
     val year = converter.stringToInt(inputManager.getInput("What is the year of the wine?"))
