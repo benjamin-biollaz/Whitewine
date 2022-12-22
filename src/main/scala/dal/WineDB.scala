@@ -59,7 +59,7 @@ class WineDB {
 
   /**
    * returns an iterator of array of strings,
-   * each line cell being a csv line
+   * each entry being a csv line
    */
   val getCSVIterator = (fileName: String) => {
     val src = io.Source.fromFile(fileName)
